@@ -13,7 +13,8 @@
 /* Register the classes */
 ClassLoader::addClasses(array
 (
+    'Bcs\ZyppyWeightedSearch'             => 'system/modules/zyppy_weighted_search/library/Bcs/modules/ZyppyWeightedSearch.php',
     // overriding default SearchResult
-    'Bcs\Model\SearchIndexBackend'    => 'system/modules/contao_weighted_search/library/Bcs/Model/SearchIndexBackend.php'
+    'Bcs\Model\SearchIndexBackend'        => 'system/modules/zyppy_weighted_search/library/Bcs/Model/SearchIndexBackend.php'
     
 ));
