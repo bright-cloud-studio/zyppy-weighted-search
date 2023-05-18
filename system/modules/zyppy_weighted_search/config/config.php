@@ -19,3 +19,4 @@ $GLOBALS['BE_MOD']['content']['search_index'] = array(
 
 /* Models */
 $GLOBALS['TL_MODELS']['tl_search'] = 'Bcs\Model\SearchIndex';
+$GLOBALS['FE_MOD']['application']['zyppy_search'] 	= 'Bcs\Module\ZyppyWeightedSearch';
