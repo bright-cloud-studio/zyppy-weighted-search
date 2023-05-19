@@ -38,8 +38,8 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 	),
 	'label' => array
 	(
-	    'fields'                  => array('url'),
-	    'format'                  => '%s'
+	    'fields'                  => array('weight', 'url'),
+	    'format'                  => '%s - %s'
 	),
 	'global_operations' => array
 	(
