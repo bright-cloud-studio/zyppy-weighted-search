@@ -31,9 +31,9 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 	(
 	'sorting' => array
 	(
-	    'mode'                    => 2,
+	    'mode'                    => 1,
 	    'fields'                  => array('weight'),
-	    'flag'                    => 1,
+	    'flag'                    => 4,
 	    'panelLayout'             => 'sort;filter;search,limit'
 	),
 	'label' => array
