@@ -32,14 +32,14 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 	'sorting' => array
 	(
 	    'mode'                    => 1,
-	    'fields'                  => array('url', 'weight'),
+	    'fields'                  => array('url'),
 	    'flag'                    => 1,
-	    'panelLayout'             => 'search,sort;filter,limit'
+	    'panelLayout'             => 'filter;search,limit'
 	),
 	'label' => array
 	(
-	    'fields'                  => array('weight', 'url'),
-	    'format'                  => '%s | %s'
+	    'fields'                  => array('url'),
+	    'format'                  => '%s'
 	),
 	'global_operations' => array
 	(
