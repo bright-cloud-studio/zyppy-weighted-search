@@ -11,9 +11,10 @@
 **/
 
 
-namespace Bcs;
+namespace Bcs\Module;
 
 use ZyppySearch\Module;
+use ZyppySearch\Module\ZyppySearch;
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\File\Metadata;
@@ -40,7 +41,7 @@ use Contao\System;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ZyppyWeightedSearch extends ZyppySearch
+class ZyppyWeightedSearch extends ModuleSearch
 {
 
 	/**
