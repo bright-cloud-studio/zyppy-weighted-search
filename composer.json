@@ -12,8 +12,8 @@
         }
     ],
     "require":{
-        "php": "^8.0",
-        "contao/core-bundle": "^4.13",
+        "php": "^7.4 || ^8.0",
+        "contao/core-bundle": "4.13 - 5.3",
         "asconsulting/zyppy_search": "dev-master"
     },
     "require-dev": {
