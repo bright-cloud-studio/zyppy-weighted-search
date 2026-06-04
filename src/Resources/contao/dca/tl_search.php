@@ -10,7 +10,6 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
-/* Table tl_location */
 $GLOBALS['TL_DCA']['tl_search'] = array
 (
 	// Config
@@ -29,89 +28,69 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 	),
 	'list' => array
 	(
-	'sorting' => array
-	(
-	    'mode'                    => 1,
-	    'fields'                  => array('weight'),
-	    'flag'                    => 12,
-	    'panelLayout'             => 'sort;filter;search,limit'
-	),
-	'label' => array
-	(
-	    'fields'                  => array('url', 'weight'),
-	    'format'                  => '%s (%s)'
-	),
-	'global_operations' => array
-	(
-	    'export' => array
-	    (
-		'label'               => 'Export Search Index CSV',
-		'href'                => 'key=exportSearchIndex',
-		'icon'                => 'system/modules/contao_search_weight/assets/icons/file-export-icon-16.png'
-	    ),
-	    'all' => array
-	    (
-		'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-		'href'                => 'act=select',
-		'class'               => 'header_edit_all',
-		'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
-	    )
-
-	),
-	'operations' => array
-	(
-	    'edit' => array
-	    (
-		'label'               => &$GLOBALS['TL_LANG']['tl_search']['edit'],
-		'href'                => 'act=edit',
-		'icon'                => 'edit.gif'
-	    ),
-
-	    'copy' => array
-	    (
-		'label'               => &$GLOBALS['TL_LANG']['tl_search']['copy'],
-		'href'                => 'act=copy',
-		'icon'                => 'copy.gif'
-	    ),
-	    'delete' => array
-	    (
-		'label'               => &$GLOBALS['TL_LANG']['tl_search']['delete'],
-		'href'                => 'act=delete',
-		'icon'                => 'delete.gif',
-		'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-	    ),
-	    'toggle' => array
+		'sorting' => array
 		(
-			'label'               => &$GLOBALS['TL_LANG']['tl_search']['toggle'],
-			'icon'                => 'visible.gif',
-			'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-			'button_callback'     => array('Bcs\Backend\SearchIndexBackend', 'toggleIcon')
+			'mode'                    => 1,
+			'fields'                  => array('weight'),
+			'flag'                    => 12,
+			'panelLayout'             => 'sort;filter;search,limit'
 		),
-	    'show' => array
-	    (
-		'label'               => &$GLOBALS['TL_LANG']['tl_search']['show'],
-		'href'                => 'act=show',
-		'icon'                => 'show.gif'
-	    )
-	)
+		'label' => array
+		(
+			'fields'                  => array('url', 'weight'),
+			'format'                  => '%s (%s)'
+		),
+		'global_operations' => array
+		(
+			'export' => array
+			(
+				'label'               => 'Export Search Index CSV',
+				'href'                => 'key=exportSearchIndex',
+				'icon'                => 'show.svg'
+			),
+			'all' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+				'href'                => 'act=select',
+				'class'               => 'header_edit_all',
+				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+			)
+		),
+		'operations' => array
+		(
+			'edit' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_search']['edit'],
+				'href'                => 'act=edit',
+				'icon'                => 'edit.svg'
+			),
+			'copy' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_search']['copy'],
+				'href'                => 'act=copy',
+				'icon'                => 'copy.svg'
+			),
+			'delete' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_search']['delete'],
+				'href'                => 'act=delete',
+				'icon'                => 'delete.svg',
+				'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? '') . '\'))return false;Backend.getScrollOffset()"'
+			),
+			'show' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_search']['show'],
+				'href'                => 'act=show',
+				'icon'                => 'show.svg'
+			)
+		)
 	),
-	
-	
-	
-	
-	
-	
+
 	'palettes' => array
 	(
-		'default'         => '{search_index_legend},url,weight;'
+		'default' => '{search_index_legend},url,weight;'
 	),
-	
-	
-	
-	
-	
-	
-	
+
 	// Fields
 	'fields' => array
 	(
@@ -145,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 		),
 		'filesize' => array
 		(
-			'sql'                     => "double NOT NULL default 0" // see doctrine/dbal#1018
+			'sql'                     => "double NOT NULL default 0"
 		),
 		'checksum' => array
 		(

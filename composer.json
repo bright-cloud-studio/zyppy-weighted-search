@@ -1,38 +1,35 @@
 {
-    "name":"bright-cloud-studio/zyppy-weighted-search",
-    "description":"Extends the Zyppy Search package to allow adding weight to entries on the Search Index so they appear earlier in search results",
+    "name": "bright-cloud-studio/zyppy-weighted-search",
+    "description": "Extends the Zyppy Search package to allow adding weight to entries on the Search Index so they appear earlier in search results",
     "homepage": "http://brightcloudstudio.com/",
-    "keywords":["contao", "zyppy", "weighted", "search", "bright", "cloud", "studio"],
-    "type":"contao-module",
-    "license":"GPL-3.0-or-later",
-    "version": "0.0.1",
-    "authors":[
+    "keywords": ["contao", "zyppy", "weighted", "search", "bright", "cloud", "studio"],
+    "type": "contao-bundle",
+    "license": "GPL-3.0-or-later",
+    "authors": [
         {
-            "name":"Bright Cloud Studio",
-            "homepage":"https://brightcloudstudio.com"
+            "name": "Bright Cloud Studio",
+            "homepage": "https://brightcloudstudio.com"
         }
     ],
-    "require":{
-        "php": "^7.4 || ^8.0",
-        "contao/core-bundle": "4.13 - 5.7",
-        "asconsulting/zyppy_search": "dev-master"
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^5.7",
+        "bright-cloud-studio/contao-search": "5.7.x-dev"
     },
-    "require-dev": {
-        "contao/manager-plugin": "^2.0"
+    "extra": {
+        "contao-manager-plugin": "Bcs\\WeightedSearchBundle\\ContaoManager\\Plugin"
     },
     "autoload": {
         "psr-4": {
-            "Bcs\\": [
-                "system/modules/zyppy_weighted_search/library/Bcs"
-            ]
-        }
-    },
-    "extra": {
-        "contao": {
-            "sources": {
-                "system/modules/zyppy_weighted_search": "system/modules/zyppy_weighted_search"
-            }
-        }
-    },
-    "minimum-stability": "dev"
+            "Bcs\\WeightedSearchBundle\\": "src"
+        },
+        "classmap": [
+            "src/Resources/contao"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/"
+        ]
+    }
 }

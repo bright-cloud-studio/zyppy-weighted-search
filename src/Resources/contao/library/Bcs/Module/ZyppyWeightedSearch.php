@@ -13,15 +13,14 @@
 
 namespace Bcs\Module;
 
-use ZyppySearch\Module;
 use ZyppySearch\Module\ZyppySearch;
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\CoreBundle\File\Metadata;
 use Contao\CoreBundle\Security\ContaoCorePermissions;
 
 use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Database;
 use Contao\Environment;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -30,18 +29,14 @@ use Contao\ModuleSearch;
 use Contao\NewsModel;
 use Contao\PageModel;
 use Contao\Pagination;
+use Contao\SearchResult;
 use Contao\StringUtil;
 use Contao\Search;
 use Contao\System;
 
 
 
-/**
- * Front end module "search".
- *
- * @author Leo Feyer <https://github.com/leofeyer>
- */
-class ZyppyWeightedSearch extends ModuleSearch
+class ZyppyWeightedSearch extends ZyppySearch
 {
 
 	/**
@@ -84,8 +79,8 @@ class ZyppyWeightedSearch extends ModuleSearch
 
 		$this->Template->class .= ' zyppy_search_' .$this->id;
 
-		if (!in_array('system/modules/zyppy_search/assets/js/search.js', $GLOBALS['TL_JAVASCRIPT'])) {
-			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/zyppy_search/assets/js/search.js';
+		if (!in_array('bundles/bcssearch/js/contao_search.js', $GLOBALS['TL_JAVASCRIPT'])) {
+			$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/bcssearch/js/contao_search.js';
 		}
 
 		// Mark the x and y parameter as used (see #4277)
@@ -115,7 +110,7 @@ class ZyppyWeightedSearch extends ModuleSearch
 		$this->Template->search = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['searchLabel']);
 		$this->Template->matchAll = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['matchAll']);
 		$this->Template->matchAny = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['matchAny']);
-		$this->Template->action = ampersand(Environment::get('indexFreeRequest'));
+		$this->Template->action = StringUtil::ampersand(Environment::get('indexFreeRequest'));
 		$this->Template->advanced = ($this->searchType == 'advanced');
 
 		// Redirect page
@@ -142,7 +137,7 @@ class ZyppyWeightedSearch extends ModuleSearch
 				foreach ($this->pages as $intPageId)
 				{
 					$arrPages[] = array($intPageId);
-					$arrPages[] = $this->Database->getChildRecords($intPageId, 'tl_page');
+					$arrPages[] = Database::getInstance()->getChildRecords($intPageId, 'tl_page');
 				}
 
 				if (!empty($arrPages))
@@ -159,7 +154,7 @@ class ZyppyWeightedSearch extends ModuleSearch
 				global $objPage;
 
 				$varRootId = $objPage->rootId;
-				$arrPages = $this->Database->getChildRecords($objPage->rootId, 'tl_page');
+				$arrPages = Database::getInstance()->getChildRecords($objPage->rootId, 'tl_page');
 			}
 
 			// HOOK: add custom logic (see #5223)
@@ -188,7 +183,7 @@ class ZyppyWeightedSearch extends ModuleSearch
 			{
 				System::getContainer()->get('monolog.logger.contao.error')->error('Website search failed: ' . $e->getMessage());
 
-				$objResult = new SearchResult(array());
+				$objResult = new SearchResult([]);
 			}
 
 			$query_endtime = microtime(true);
@@ -271,22 +266,18 @@ class ZyppyWeightedSearch extends ModuleSearch
 			}
 
 			$arrResult = $objResult->getResults($to-$from+1, $from-1);
-			
-			
-			
-			
+
+
 			/////////////////////////////////////
 			// WEIGHTED SEARCH - START         //
 			/////////////////////////////////////
-            usort($arrResult, function($a, $b) {
-                return $b['weight'] <=> $a['weight'];
-            });
+			usort($arrResult, function($a, $b) {
+				return $b['weight'] <=> $a['weight'];
+			});
 			/////////////////////////////////////
 			// WEIGHTED SEARCH - END           //
 			/////////////////////////////////////
-			
-			
-			
+
 
 			// Get the results
 			foreach (array_keys($arrResult) as $i)
@@ -315,7 +306,6 @@ class ZyppyWeightedSearch extends ModuleSearch
 						if ($objNewsModel) {
 							$objTemplate->isNews = 1;
 							if ($objNewsModel->addImage && $objNewsModel->singleSRC) {
-								$strPhoto = '';
 								$uuid = StringUtil::binToUuid($objNewsModel->singleSRC);
 								$objFile = FilesModel::findByUuid($uuid);
 								$objTemplate->newsImage = $objFile->path;
@@ -329,7 +319,6 @@ class ZyppyWeightedSearch extends ModuleSearch
 					}
 					$objTemplate->isPage = 1;
 					if ($objResultPage->page_image) {
-						$strPhoto = '';
 						$uuid = StringUtil::binToUuid($objResultPage->page_image);
 						$objFile = FilesModel::findByUuid($uuid);
 						$objTemplate->pageImage = $objFile->path;
@@ -347,7 +336,7 @@ class ZyppyWeightedSearch extends ModuleSearch
 						$objTemplate->pageDescription = $objResultPage->description;
 					}
 
-					if (\Input::get('debug')) {
+					if (Input::get('debug')) {
 						echo "Format News Teaser: " .$this->formatNewsTeaser ."<br>";
 						echo "News Teaser Limit: " .$this->newsTeaserLimit ."<br>";
 						echo "Format Page Teaser: " .$this->formatPageTeaser ."<br>";

@@ -12,8 +12,9 @@
 
 namespace Bcs\Model;
 
-class SearchIndex extends \Model
+use Contao\Model;
+
+class SearchIndex extends Model
 {
-	/* Table name */
-	protected static $strTable = 'tl_search';	
+	protected static $strTable = 'tl_search';
 }
