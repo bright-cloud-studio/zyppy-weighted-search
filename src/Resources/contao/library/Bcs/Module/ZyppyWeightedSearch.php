@@ -25,7 +25,6 @@ use Contao\Environment;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\Input;
-use Contao\ModuleSearch;
 use Contao\NewsModel;
 use Contao\PageModel;
 use Contao\Pagination;

@@ -15,7 +15,7 @@ $GLOBALS['TL_DCA']['tl_search'] = array
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+		'dataContainer'               => \Contao\DC_Table::class,
 		'sql' => array
 		(
 			'keys' => array
