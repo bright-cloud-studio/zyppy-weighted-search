@@ -309,7 +309,14 @@ class ZyppyWeightedSearch extends ZyppySearch
 							if ($objNewsModel->addImage && $objNewsModel->singleSRC) {
 								$uuid = StringUtil::binToUuid($objNewsModel->singleSRC);
 								$objFile = FilesModel::findByUuid($uuid);
-								$objTemplate->newsImage = $objFile ? $this->resizeImage($objFile->path) : null;
+								if ($objFile) {
+									$rendered = $this->renderSearchImage($objFile->path);
+									if ($rendered !== null) {
+										$objTemplate->newsImageHtml = $rendered;
+									} else {
+										$objTemplate->newsImage = $objFile->path;
+									}
+								}
 							}
 							if ($this->formatNewsTeaser) {
 								$objTemplate->newsTeaser = $this->formatText($objNewsModel->teaser, $this->newsTeaserLimit);
@@ -322,7 +329,14 @@ class ZyppyWeightedSearch extends ZyppySearch
 					if ($objResultPage->page_image) {
 						$uuid = StringUtil::binToUuid($objResultPage->page_image);
 						$objFile = FilesModel::findByUuid($uuid);
-						$objTemplate->pageImage = $objFile ? $this->resizeImage($objFile->path) : null;
+						if ($objFile) {
+							$rendered = $this->renderSearchImage($objFile->path);
+							if ($rendered !== null) {
+								$objTemplate->pageImageHtml = $rendered;
+							} else {
+								$objTemplate->pageImage = $objFile->path;
+							}
+						}
 					}
 
 					if ($this->formatPageTeaser) {
